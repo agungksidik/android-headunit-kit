@@ -44,7 +44,25 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew testReleaseUnitTest assembleRel
 
 ## Screenshots
 
-Screenshot: coming soon
+| Factory Home | Head Unit Home |
+|---|---|
+| <img src="docs/screenshots/00-before-vendor-home.png" width="480" alt="Factory Home"> | <img src="docs/screenshots/01-home.png" width="480" alt="Head Unit Home"> |
+
+| Music player | Search |
+|---|---|
+| <img src="docs/screenshots/02-player.png" width="480" alt="Music player"> | <img src="docs/screenshots/03-search.png" width="480" alt="Search across folders and songs"> |
+
+| Settings | All apps |
+|---|---|
+| <img src="docs/screenshots/04-settings.png" width="480" alt="Settings"> | <img src="docs/screenshots/05-apps.png" width="480" alt="All apps"> |
+
+- Home: clock, weather, speed with road and car, music card, four tiles and the dock.
+- Music player: folders, songs and the vinyl card with the now-playing bar.
+- Search: folders first, then songs, across the whole USB library.
+- Settings: default launcher, shortcuts, music rescan, restart and version.
+- All apps: six-column grid of every launchable app.
+
+Screenshots were taken on the tested unit before the car image was replaced by the original drawing in this repo.
 
 ## Credits
 

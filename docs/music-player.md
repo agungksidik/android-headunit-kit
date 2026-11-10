@@ -7,6 +7,14 @@ The factory music app is heavy (about 227 MB RSS) and plain. USB drives are not 
 - Music apps show no files from the USB drive.
 - MediaStore has no audio rows for the drive.
 
+## Screenshots
+
+<img src="screenshots/02-player.png" width="560" alt="Music player">
+
+<img src="screenshots/03-search.png" width="560" alt="Search across folders and songs">
+
+Screenshots were taken on the tested unit before the car image was replaced by the original drawing in this repo.
+
 ## How it works
 The launcher includes a USB player. The drives are mounted at `/mnt/media_rw/<name>`, are world-readable, and are not under `/storage`. The player scans every readable directory below `/mnt/media_rw` and indexes audio files (mp3, flac, m4a, aac, ogg, opus, wav; extensions are matched case-insensitively). A folder is a directory that directly contains audio. A drive with no audio, such as a DVR drive, adds nothing.
 

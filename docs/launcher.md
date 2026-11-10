@@ -7,6 +7,16 @@ The factory Home is heavy and the unit is slow. This launcher is a light replace
 - The factory Home takes a long time to draw and uses about 160 MB of RAM.
 - You want speed, a music card, four shortcuts and a dock on one screen.
 
+## Screenshots
+
+<img src="screenshots/01-home.png" width="560" alt="Home">
+
+<img src="screenshots/04-settings.png" width="560" alt="Settings">
+
+<img src="screenshots/05-apps.png" width="560" alt="All apps">
+
+Screenshots were taken on the tested unit before the car image was replaced by the original drawing in this repo.
+
 ## Features
 ### Home
 - Clock (24 h) and date in the device language.
