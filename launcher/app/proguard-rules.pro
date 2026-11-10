@@ -1,0 +1,3 @@
+-dontobfuscate
+-keep class com.agung.headhome.MediaListener { *; }
+-keep class * extends android.service.notification.NotificationListenerService { *; }

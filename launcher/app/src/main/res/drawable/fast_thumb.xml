@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fast-scroll thumb: 6dp visible bar flush right inside a 48dp wide touch area, with a small top and bottom inset. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="42dp"
+    android:insetTop="6dp"
+    android:insetRight="0dp"
+    android:insetBottom="6dp">
+    <shape android:shape="rectangle">
+        <size android:width="6dp" android:height="56dp" />
+        <solid android:color="#B35B9BFF" />
+        <corners android:radius="3dp" />
+    </shape>
+</inset>

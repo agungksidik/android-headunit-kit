@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.HeadHome" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/muted</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:windowShowWallpaper">false</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fast_thumb</item>
+        <item name="android:fastScrollTrackDrawable">@drawable/fast_track</item>
+    </style>
+
+    <style name="Theme.HeadHome.Dialog" parent="android:Theme.Material.Dialog.Alert">
+        <item name="android:colorBackground">@color/card_solid</item>
+        <item name="android:windowBackground">@drawable/bg_dialog</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/muted</item>
+        <item name="android:colorAccent">@color/accent</item>
+    </style>
+</resources>
