@@ -1,15 +1,17 @@
-# Launcher (Head Unit Home)
+# Custom Home (launcher)
 
 ## Problem
-The factory Home is heavy and the unit is slow. This launcher is a light replacement: plain Java, no AndroidX, about 120 KB APK. The factory Home stays installed as a fallback.
+The Factory Home is heavy and the unit is slow. Custom Home is a light replacement: plain Java, no AndroidX, about 120 KB APK. The Factory Home stays installed as a fallback.
+
+Built from scratch: Custom Home is an original app written for this kit, with no third-party launcher, no ads and no tracking. The only network use is the Open-Meteo weather request and the unit's own ADB on 127.0.0.1.
 
 ## Symptoms
-- The factory Home takes a long time to draw and uses about 160 MB of RAM.
+- The Factory Home takes a long time to draw and uses about 160 MB of RAM.
 - You want speed, a music card, four shortcuts and a dock on one screen.
 
 ## Screenshots
 
-<img src="screenshots/01-home.png" width="560" alt="Home">
+<img src="screenshots/01-home.png" width="560" alt="Custom Home">
 
 <img src="screenshots/04-settings.png" width="560" alt="Settings">
 
@@ -24,7 +26,7 @@ Screenshots were taken on the tested unit before the car image was replaced by t
 - GPS speed from `GPS_PROVIDER` (1 s updates). It shows "--" when there has been no fix for 5 s.
 - The road animation scrolls its center line in proportion to the speed and stops at 0 km/h.
 - Turn tilt: above 10 km/h a smoothed bearing change of more than 4 degrees per second tilts the car and the road to the left or right.
-- Music card: shows another app only while that app is playing (through its media session, which needs notification access). Otherwise it shows the built-in USB player.
+- Music card: shows another app only while that app is playing (through its media session, which needs notification access). Otherwise it shows the Custom Music Player.
 - Volume row on the music card: minus and plus buttons and a level bar that drive the unit's MCU volume. Holding a button repeats every 150 ms.
 - Edit and Restart buttons. Restart asks for confirmation and warns when the car is moving.
 - Four shortcut tiles (defaults: CarPlay, Android Auto, YouTube, 360 camera). Long-press a tile, or tap it in edit mode, to pick any launchable app.
@@ -43,7 +45,7 @@ Screenshots were taken on the tested unit before the car image was replaced by t
 ### Icon and splash
 - Adaptive launcher icon with a monochrome variant, and an Android 12 splash screen with the same dark background.
 
-The USB player is described in [Music player](music-player.md).
+The Custom Music Player is described in [Custom Music Player](music-player.md).
 
 ## How it talks to the factory firmware
 
@@ -71,7 +73,7 @@ adb shell cmd notification allow_listener com.agung.headhome/com.agung.headhome.
 adb shell cmd package set-home-activity com.agung.headhome/.MainActivity
 adb shell setprop persist.nwd.launcher.default com.agung.headhome
 ```
-The first Home press right after installing can still open the factory Home; the second opens the launcher.
+The first Home press right after installing can still open the Factory Home; the second opens Custom Home.
 
 ## Check it worked
 Press Home: the launcher opens. Reboot and press Home again. `adb shell getprop persist.nwd.launcher.default` prints `com.agung.headhome`.

@@ -18,8 +18,8 @@ Commands assume one unit is connected over ADB. With several devices add `-s <un
 | [Keyboard](keyboard.md) | Typing lags, a long press types a number instead of a letter |
 | [EQ tuning](eq-tuning.md) | Bass distorts at high volume |
 | [Background play](background-play.md) | Music apps stop when the screen changes |
-| [Launcher](launcher.md) | A light Home screen with speed, music and shortcuts |
-| [Music player](music-player.md) | Playing USB music inside the launcher |
+| [Custom Home](launcher.md) | A light Home screen with speed, music and shortcuts |
+| [Custom Music Player](music-player.md) | Playing USB music inside the launcher |
 | [Offline maps](offline-maps.md) | Navigation without mobile data |
 | [DVR and load](dvr-and-load.md) | High CPU load, 360 camera loop recording |
 

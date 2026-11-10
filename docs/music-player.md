@@ -1,7 +1,7 @@
-# Music player
+# Custom Music Player
 
 ## Problem
-The factory music app is heavy (about 227 MB RSS) and plain. USB drives are not visible to Android's media library on this firmware, so ordinary music apps cannot find the files.
+The Factory Music Player is heavy (about 227 MB RSS) and plain. USB drives are not visible to Android's media library on this firmware, so ordinary music apps cannot find the files.
 
 ## Symptoms
 - Music apps show no files from the USB drive.
@@ -9,14 +9,16 @@ The factory music app is heavy (about 227 MB RSS) and plain. USB drives are not 
 
 ## Screenshots
 
-<img src="screenshots/02-player.png" width="560" alt="Music player">
+| Factory Music Player | Custom Music Player |
+|---|---|
+| <img src="screenshots/00b-before-vendor-music.png" width="480" alt="Factory Music Player"> | <img src="screenshots/02-player.png" width="480" alt="Custom Music Player"> |
 
 <img src="screenshots/03-search.png" width="560" alt="Search across folders and songs">
 
 Screenshots were taken on the tested unit before the car image was replaced by the original drawing in this repo.
 
 ## How it works
-The launcher includes a USB player. The drives are mounted at `/mnt/media_rw/<name>`, are world-readable, and are not under `/storage`. The player scans every readable directory below `/mnt/media_rw` and indexes audio files (mp3, flac, m4a, aac, ogg, opus, wav; extensions are matched case-insensitively). A folder is a directory that directly contains audio. A drive with no audio, such as a DVR drive, adds nothing.
+The launcher includes the Custom Music Player. It is an original app written for this kit, with no third-party player, no ads and no tracking; the only network use is the Open-Meteo weather request on the launcher's Home screen and the unit's own ADB on 127.0.0.1. The drives are mounted at `/mnt/media_rw/<name>`, are world-readable, and are not under `/storage`. The player scans every readable directory below `/mnt/media_rw` and indexes audio files (mp3, flac, m4a, aac, ogg, opus, wav; extensions are matched case-insensitively). A folder is a directory that directly contains audio. A drive with no audio, such as a DVR drive, adds nothing.
 
 - Folders are in natural, case-insensitive order by path ("01" before "2" before "10"). Songs in a folder are in natural order by file name.
 - Repeat button, four modes in this order: continue (play folder by folder and stop after the last song of the last folder), repeat all (after the last folder start again at the first; the default), repeat folder, repeat one.
@@ -42,7 +44,7 @@ adb shell "ls /mnt/media_rw/<drive> | head"
 Open Music in the dock: the folders appear. Start a song, press Home, press the steering-wheel next button.
 
 ## Rollback
-Use the factory music app (`com.nwd.android.music.ui`). Nothing on the drive is changed by the player.
+Use the Factory Music Player (`com.nwd.android.music.ui`). Nothing on the drive is changed by the player.
 
 ## Safety
 - The player only reads the drive. Do not rely on it to copy or edit files.
