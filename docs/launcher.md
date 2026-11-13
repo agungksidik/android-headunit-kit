@@ -7,7 +7,7 @@ Built from scratch: Custom Home is an original app written for this kit, with no
 
 ## Symptoms
 - The Factory Home takes a long time to draw and uses about 160 MB of RAM.
-- You want speed, a music card, four shortcuts and a dock on one screen.
+- You want speed, a music card, six shortcuts and a dock on one screen.
 
 ## Screenshots
 
@@ -29,7 +29,7 @@ Screenshots were taken on the tested unit before the car image was replaced by t
 - Music card: shows another app only while that app is playing (through its media session, which needs notification access). Otherwise it shows the Custom Music Player.
 - Volume row on the music card: minus and plus buttons and a level bar that drive the unit's MCU volume. Holding a button repeats every 150 ms.
 - Edit and Restart buttons. Restart asks for confirmation and warns when the car is moving.
-- Four shortcut tiles (defaults: CarPlay, Android Auto, YouTube, 360 camera). Long-press a tile, or tap it in edit mode, to pick any launchable app.
+- Six shortcut tiles (defaults: CarPlay, Android Auto, YouTube, NewPipe, Maps, 360 camera). Long-press a tile, or tap it in edit mode, to pick any launchable app. A default app that is not installed shows "Choose app". Settings, "Reset shortcuts" restores the six defaults. The full layout shows a grid of 2 columns by 3 rows, the compact layout one row of six small tiles.
 - Dock: Home, Music, Phone, DSP, Settings, Apps.
 
 ### Settings
@@ -40,7 +40,7 @@ Screenshots were taken on the tested unit before the car image was replaced by t
 - Six-column grid of every launchable app. The list is cached and rebuilt when a package is added, removed or changed.
 
 ### Split screen
-- All activities are resizeable. Below 900 dp of width Home switches to a compact layout (clock and weather, road and car, music card, one row of four tiles, dock). Dock labels are hidden below 560 dp.
+- All activities are resizeable. Below 900 dp of width Home switches to a compact layout (clock and weather, road and car, music card, one row of six tiles, dock). Dock labels are hidden below 560 dp.
 
 ### Icon and splash
 - Adaptive launcher icon with a monochrome variant, and an Android 12 splash screen with the same dark background.

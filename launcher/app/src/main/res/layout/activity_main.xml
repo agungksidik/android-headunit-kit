@@ -148,7 +148,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="14dp"
                 android:orientation="horizontal">
 
@@ -157,7 +157,7 @@
                     layout="@layout/tile"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="7dp"
+                    android:layout_marginEnd="4dp"
                     android:layout_weight="1" />
 
                 <include
@@ -165,8 +165,8 @@
                     layout="@layout/tile"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginEnd="7dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
                     android:layout_weight="1" />
 
                 <include
@@ -174,8 +174,8 @@
                     layout="@layout/tile"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginEnd="7dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
                     android:layout_weight="1" />
 
                 <include
@@ -183,7 +183,25 @@
                     layout="@layout/tile"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="7dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/tile_4"
+                    layout="@layout/tile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/tile_5"
+                    layout="@layout/tile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
                     android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>

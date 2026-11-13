@@ -167,7 +167,7 @@ public class SettingsActivity extends Activity {
                 .setMessage(R.string.reset_body)
                 .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.reset_confirm,
-                        (d, w) -> getSharedPreferences(MainActivity.PREFS, MODE_PRIVATE).edit().clear().apply())
+                        (d, w) -> MainActivity.resetTiles(this))
                 .create()
                 .show();
     }

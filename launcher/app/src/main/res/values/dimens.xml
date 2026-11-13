@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="music_art_size">64dp</dimen>
-    <dimen name="tile_icon_size">40dp</dimen>
+    <dimen name="tile_icon_size">32dp</dimen>
+    <dimen name="tile_label_size">11sp</dimen>
 </resources>

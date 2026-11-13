@@ -7,3 +7,5 @@ adbkey*
 .idea/
 *.iml
 .DS_Store
+.agents/
+skills-lock.json

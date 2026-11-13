@@ -70,7 +70,7 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew testReleaseUnitTest assembleRel
 |---|
 | <img src="docs/screenshots/05-apps.png" width="480" alt="All apps"> |
 
-- Custom Home: clock, weather, speed with road and car, music card, four tiles and the dock.
+- Custom Home: clock, weather, speed with road and car, music card, six tiles and the dock.
 - Custom Music Player: folders, songs and the vinyl card with the now-playing bar.
 - Search: folders first, then songs, across the whole USB library.
 - Settings: default launcher, shortcuts, music rescan, restart and version.

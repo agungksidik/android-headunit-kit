@@ -40,13 +40,26 @@ public class MainActivity extends Activity {
     private static final long WEATHER_TICK_MS = 30 * 60 * 1000;
     private static final long WEATHER_STALE_MS = 60 * 60 * 1000;
 
-    private static final ComponentName[] DEFAULT_TILES = {
-            new ComponentName("com.zjinnova.zlink", "com.zjinnova.android.zlink.features.launcher.CarPlayActivity"),
-            new ComponentName("com.zjinnova.zlink", "com.zjinnova.android.zlink.features.launcher.AutoActivity"),
-            new ComponentName("com.google.android.youtube", "com.google.android.youtube.app.honeycomb.Shell$HomeActivity"),
-            new ComponentName("com.ivicar.avm", "com.ivicar.modules.main.view.MainActivity"),
-    };
-    private static final int[] TILE_IDS = {R.id.tile_0, R.id.tile_1, R.id.tile_2, R.id.tile_3};
+    private static final int TILE_COUNT = 6;
+    private static final String KEY_TILES_MIGRATED = "migrated_6_tiles";
+
+    private static final ComponentName CARPLAY = new ComponentName("com.zjinnova.zlink",
+            "com.zjinnova.android.zlink.features.launcher.CarPlayActivity");
+    private static final ComponentName ANDROID_AUTO = new ComponentName("com.zjinnova.zlink",
+            "com.zjinnova.android.zlink.features.launcher.AutoActivity");
+    private static final ComponentName YOUTUBE = new ComponentName("com.google.android.youtube",
+            "com.google.android.youtube.app.honeycomb.Shell$HomeActivity");
+    private static final ComponentName CAMERA_360 = new ComponentName("com.ivicar.avm",
+            "com.ivicar.modules.main.view.MainActivity");
+
+    /** Defaults of the four-tile version. Slots that were never saved keep these when the app updates. */
+    private static final ComponentName[] LEGACY_DEFAULTS = {CARPLAY, ANDROID_AUTO, YOUTUBE, CAMERA_360};
+
+    /** Default components per slot; null where the default is resolved from a package name. */
+    private static final ComponentName[] DEFAULT_TILES = {CARPLAY, ANDROID_AUTO, YOUTUBE, null, null, CAMERA_360};
+    private static final String[] DEFAULT_PACKAGES = {null, null, null, "org.schabi.newpipe",
+            "com.google.android.apps.maps", null};
+    private static final int[] TILE_IDS = {R.id.tile_0, R.id.tile_1, R.id.tile_2, R.id.tile_3, R.id.tile_4, R.id.tile_5};
 
     /** The runtime permission dialog is shown once per process, not on every return to Home. */
     private static boolean permissionsAsked;
@@ -64,7 +77,7 @@ public class MainActivity extends Activity {
     private ImageView btnEditIcon;
     private TextView btnEditLabel;
     private TextView btnRestartLabel;
-    private final View[] tiles = new View[4];
+    private final View[] tiles = new View[TILE_COUNT];
     private MusicCard music;
     private LocationManager locationManager;
     private SharedPreferences prefs;
@@ -135,6 +148,7 @@ public class MainActivity extends Activity {
         prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         weather = new WeatherRepo(this);
+        migrateTiles();
         buildUi();
     }
 
@@ -339,12 +353,52 @@ public class MainActivity extends Activity {
 
     // ---- tiles ----
 
+    /** Slots 0 to 3 that were never saved keep the old defaults, so the update does not change them. */
+    private void migrateTiles() {
+        if (prefs.getBoolean(KEY_TILES_MIGRATED, false)) {
+            return;
+        }
+        SharedPreferences.Editor e = prefs.edit();
+        if (isUpdatedInstall()) {
+            for (int slot = 0; slot < LEGACY_DEFAULTS.length; slot++) {
+                if (!prefs.contains("tile_" + slot)) {
+                    e.putString("tile_" + slot, LEGACY_DEFAULTS[slot].flattenToString());
+                }
+            }
+        }
+        e.putBoolean(KEY_TILES_MIGRATED, true).apply();
+    }
+
+    /** True when this app was installed before and then updated (a fresh install has equal times). */
+    private boolean isUpdatedInstall() {
+        try {
+            android.content.pm.PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+            return info.lastUpdateTime > info.firstInstallTime;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    /** Restores all six default tiles. Used by Settings, "Reset shortcuts". */
+    static void resetTiles(Context ctx) {
+        SharedPreferences.Editor e = ctx.getSharedPreferences(PREFS, MODE_PRIVATE).edit();
+        for (int slot = 0; slot < TILE_COUNT; slot++) {
+            e.remove("tile_" + slot);
+        }
+        e.putBoolean(KEY_TILES_MIGRATED, true).apply();
+    }
+
     private ComponentName loadTile(int slot) {
         String flat = prefs.getString("tile_" + slot, null);
-        if (flat == null) {
+        if (flat != null) {
+            return ComponentName.unflattenFromString(flat);
+        }
+        if (DEFAULT_TILES[slot] != null) {
             return DEFAULT_TILES[slot];
         }
-        return ComponentName.unflattenFromString(flat);
+        // Resolve the launcher activity of the default package (null when it is not installed).
+        Intent launch = getPackageManager().getLaunchIntentForPackage(DEFAULT_PACKAGES[slot]);
+        return launch != null ? launch.getComponent() : null;
     }
 
     private void saveTile(int slot, ComponentName cn) {
@@ -375,8 +429,12 @@ public class MainActivity extends Activity {
                 icon.setColorFilter(getColor(R.color.muted));
                 label.setText(R.string.choose_app);
             }
-            tile.setBackgroundResource(editMode ? R.drawable.bg_tile_edit : R.drawable.bg_card);
-            tile.findViewById(R.id.tile_badge).setVisibility(editMode ? View.VISIBLE : View.GONE);
+            tile.setBackgroundResource(editMode ? R.drawable.bg_tile_edit : R.drawable.bg_tile);
+            // The compact row is too narrow for the badge. Labels are hidden below 560 dp, like the dock.
+            tile.findViewById(R.id.tile_badge).setVisibility(editMode && !compactLayout ? View.VISIBLE : View.GONE);
+            label.setVisibility(compactLayout
+                    && getResources().getConfiguration().screenWidthDp < HIDE_DOCK_LABELS_BELOW_DP
+                    ? View.GONE : View.VISIBLE);
         }
     }
 

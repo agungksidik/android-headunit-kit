@@ -30,6 +30,8 @@
         <package android:name="com.zjinnova.zlink" />
         <package android:name="com.google.android.youtube" />
         <package android:name="com.ivicar.avm" />
+        <package android:name="com.google.android.apps.maps" />
+        <package android:name="org.schabi.newpipe" />
     </queries>
 
     <application

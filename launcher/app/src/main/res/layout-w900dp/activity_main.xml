@@ -100,7 +100,7 @@
                         android:id="@+id/btn_edit"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="7dp"
+                        android:layout_marginEnd="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_button"
                         android:clickable="true"
@@ -129,7 +129,7 @@
                         android:id="@+id/btn_restart"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="7dp"
+                        android:layout_marginStart="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_button"
                         android:clickable="true"
@@ -157,14 +157,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="12dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginBottom="7dp"
+                        android:layout_marginBottom="6dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
@@ -173,7 +173,7 @@
                             layout="@layout/tile"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="7dp"
+                            android:layout_marginEnd="6dp"
                             android:layout_weight="1" />
 
                         <include
@@ -181,14 +181,15 @@
                             layout="@layout/tile"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="6dp"
                             android:layout_weight="1" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
@@ -197,7 +198,7 @@
                             layout="@layout/tile"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="7dp"
+                            android:layout_marginEnd="6dp"
                             android:layout_weight="1" />
 
                         <include
@@ -205,7 +206,31 @@
                             layout="@layout/tile"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <include
+                            android:id="@+id/tile_4"
+                            layout="@layout/tile"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/tile_5"
+                            layout="@layout/tile"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="6dp"
                             android:layout_weight="1" />
                     </LinearLayout>
                 </LinearLayout>
