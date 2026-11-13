@@ -4,6 +4,8 @@ Newest first.
 
 ## 2026-11-13
 
+- Build flavors: `publicEdition` (default) and `owner`, with the same application id. The owner flavor can add `launcher/app/src/owner/res` (ignored by git) to compile in a different car picture. The public build works without that folder.
+- Car image: a new, more realistic built-in rear view of a white compact SUV (gradient fills, tail light bar with L-shaped clusters, licence plate, tyres), and Settings, "Car image" to choose your own PNG or go back to the built-in drawing. A PNG can also be pushed to the app's files directory with root ADB.
 - Six customizable shortcut tiles instead of four: a 2 by 3 grid in the full layout and one row of six in the compact layout. The added slots default to Maps and the 360 camera. Saved choices in the first four slots are kept. Reset shortcuts restores all six defaults (CarPlay, Android Auto, YouTube, NewPipe, Maps, 360 camera).
 
 ## 2026-11-10

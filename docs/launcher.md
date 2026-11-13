@@ -15,7 +15,9 @@ Built from scratch: Custom Home is an original app written for this kit, with no
 
 <img src="screenshots/04-settings.png" width="560" alt="Settings">
 
-<img src="screenshots/05-apps.png" width="560" alt="All apps">
+| Factory All Apps | Custom All Apps |
+|---|---|
+| <img src="screenshots/00c-before-vendor-apps.png" width="400" alt="Factory All Apps"> | <img src="screenshots/05-apps.png" width="400" alt="Custom All Apps"> |
 
 Screenshots were taken on the tested unit before the car image was replaced by the original drawing in this repo.
 
@@ -31,6 +33,17 @@ Screenshots were taken on the tested unit before the car image was replaced by t
 - Edit and Restart buttons. Restart asks for confirmation and warns when the car is moving.
 - Six shortcut tiles (defaults: CarPlay, Android Auto, YouTube, NewPipe, Maps, 360 camera). Long-press a tile, or tap it in edit mode, to pick any launchable app. A default app that is not installed shows "Choose app". Settings, "Reset shortcuts" restores the six defaults. The full layout shows a grid of 2 columns by 3 rows, the compact layout one row of six small tiles.
 - Dock: Home, Music, Phone, DSP, Settings, Apps.
+
+### Car image
+- Settings, "Car image": use the built-in drawing, choose your own picture, or remove it. A chosen picture is copied to `filesDir/car_custom.png` as a PNG, scaled so the longest side is at most 800 px, and its transparency is kept. Home shows it instead of the built-in drawing and reloads it when the file changes.
+- A transparent rear-view PNG of about 352x382 px fits best: the car in the lower part of the picture, with free space above it for the speed number.
+- You can also push a PNG with root ADB (replace `car.png` with your file):
+```
+adb push car.png /data/local/tmp/car.png
+adb shell "cat /data/local/tmp/car.png > /data/data/com.agung.headhome/files/car_custom.png"
+adb shell 'U=$(stat -c %u /data/data/com.agung.headhome); chown $U:$U /data/data/com.agung.headhome/files/car_custom.png'
+```
+Delete the file (or use "Remove custom image") to return to the built-in drawing.
 
 ### Settings
 - Default launcher: lists every Home activity and sets the choice with `cmd package set-home-activity` and `setprop persist.nwd.launcher.default`.
@@ -60,13 +73,19 @@ The Custom Music Player is described in [Custom Music Player](music-player.md).
 ## Build
 ```
 cd launcher
-JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew testReleaseUnitTest assembleRelease
+JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew testPublicEditionReleaseUnitTest assemblePublicEditionRelease
 ```
-The APK is written to `launcher/app/build/outputs/apk/release/app-release.apk` (signed with the debug key). Set `sdk.dir` in `launcher/local.properties` to your Android SDK.
+The APK is written to `launcher/app/build/outputs/apk/publicEdition/release/app-publicEdition-release.apk` (signed with the debug key). Set `sdk.dir` in `launcher/local.properties` to your Android SDK.
+
+There are two build flavors with the same application id (`com.agung.headhome`), so one installs over the other and keeps its settings. `publicEdition` is the default and is what this repository builds. `owner` adds the resource folder `launcher/app/src/owner/res` (ignored by git) on top of the app. If you want your own car picture compiled in, you have two options: use Settings, "Car image" (no rebuild), or create `launcher/app/src/owner/res/drawable/car.png` (same resource name as the built-in `car.xml`, so it replaces it) and run:
+```
+JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew assembleOwnerRelease
+```
+The APK is then in `launcher/app/build/outputs/apk/owner/release/`. A clean clone without `src/owner` still builds `assemblePublicEditionRelease`.
 
 ## Install
 ```
-adb install -r launcher/app/build/outputs/apk/release/app-release.apk
+adb install -r launcher/app/build/outputs/apk/publicEdition/release/app-publicEdition-release.apk
 adb shell pm grant com.agung.headhome android.permission.ACCESS_FINE_LOCATION
 adb shell pm grant com.agung.headhome android.permission.POST_NOTIFICATIONS
 adb shell cmd notification allow_listener com.agung.headhome/com.agung.headhome.MediaListener

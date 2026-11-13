@@ -57,7 +57,7 @@ The guides were tested on one unit. If `/data/nwdappconfig/app/` is missing, the
 ## Working on the launcher (`launcher/`)
 
 - Plain Java 17, no Kotlin, no AndroidX. Framework views only.
-- Build and test from `launcher/`: `JAVA_HOME=<jdk17> ./gradlew testReleaseUnitTest assembleRelease --console=plain -q`.
+- Build and test from `launcher/`: `JAVA_HOME=<jdk17> ./gradlew testPublicEditionReleaseUnitTest assemblePublicEditionRelease --console=plain -q`.
 - Pure logic (queue, search, natural order, weather codes, ADB framing) has JUnit tests. Add a test when you change it.
 - All user-facing text goes into `res/values/strings.xml` (English) and `res/values-in/strings.xml` (Indonesian).
 - Code, comments, identifiers and docs are English, in a plain factual tone.

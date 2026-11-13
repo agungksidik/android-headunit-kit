@@ -23,7 +23,10 @@ import java.util.Locale;
 public class SettingsActivity extends Activity {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private static final int REQ_CAR_IMAGE = 7;
+
     private TextView launcherSubtitle;
+    private TextView carSubtitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,9 @@ public class SettingsActivity extends Activity {
             PlayerService.setAutoResume(this, on);
             ((TextView) v.findViewById(R.id.setting_subtitle)).setText(on ? R.string.on : R.string.off);
         });
+        View car = addRow(list, R.drawable.ic_car, R.string.settings_car, "", true);
+        carSubtitle = car.findViewById(R.id.setting_subtitle);
+        car.setOnClickListener(v -> showCarDialog());
         addRow(list, R.drawable.ic_refresh, R.string.settings_reset, null, true)
                 .setOnClickListener(v -> confirmReset());
         addRow(list, R.drawable.ic_power, R.string.settings_restart, null, true)
@@ -66,6 +72,7 @@ public class SettingsActivity extends Activity {
     protected void onResume() {
         super.onResume();
         launcherSubtitle.setText(currentLauncherLabel());
+        carSubtitle.setText(CarImage.hasCustom(this) ? R.string.car_custom : R.string.car_builtin);
     }
 
     private View addRow(LinearLayout list, int icon, int title, String subtitle, boolean clickable) {
@@ -157,6 +164,60 @@ public class SettingsActivity extends Activity {
 
     private static void toast(Context ctx, String text) {
         Toast.makeText(ctx, text, Toast.LENGTH_LONG).show();
+    }
+
+    // ---- car image ----
+
+    private void showCarDialog() {
+        final boolean custom = CarImage.hasCustom(this);
+        java.util.List<CharSequence> items = new java.util.ArrayList<>();
+        items.add(getString(R.string.car_dialog_builtin));
+        items.add(getString(R.string.car_dialog_choose));
+        if (custom) {
+            items.add(getString(R.string.car_dialog_remove));
+        }
+        new AlertDialog.Builder(this, R.style.Theme_HeadHome_Dialog)
+                .setTitle(R.string.settings_car)
+                .setItems(items.toArray(new CharSequence[0]), (d, which) -> {
+                    if (which == 1) {
+                        pickCarImage();
+                    } else {
+                        CarImage.remove(this);
+                        carSubtitle.setText(R.string.car_builtin);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void pickCarImage() {
+        Intent pick = new Intent(Intent.ACTION_OPEN_DOCUMENT)
+                .addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("image/*");
+        try {
+            startActivityForResult(pick, REQ_CAR_IMAGE);
+        } catch (android.content.ActivityNotFoundException e) {
+            toast(this, getString(R.string.car_failed));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQ_CAR_IMAGE || resultCode != RESULT_OK || data == null || data.getData() == null) {
+            return;
+        }
+        final Context app = getApplicationContext();
+        final android.net.Uri uri = data.getData();
+        new Thread(() -> {
+            boolean ok = CarImage.importFrom(app, uri);
+            handler.post(() -> {
+                toast(app, app.getString(ok ? R.string.car_saved : R.string.car_failed));
+                if (ok && carSubtitle != null) {
+                    carSubtitle.setText(R.string.car_custom);
+                }
+            });
+        }, "car-image").start();
     }
 
     // ---- shortcuts ----

@@ -9,3 +9,4 @@ adbkey*
 .DS_Store
 .agents/
 skills-lock.json
+launcher/app/src/owner/

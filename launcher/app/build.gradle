@@ -14,6 +14,19 @@ android {
         versionName '0.1'
     }
 
+    // Two editions with the same application id, so the owner build installs over the public one and keeps its
+    // preferences. The owner flavor adds src/owner/res (not in git) to override the built-in car drawing.
+    flavorDimensions "edition"
+    productFlavors {
+        publicEdition {
+            dimension "edition"
+            isDefault = true
+        }
+        owner {
+            dimension "edition"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true

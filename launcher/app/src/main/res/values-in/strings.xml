@@ -66,4 +66,12 @@
     <string name="search_results">HASIL PENCARIAN · %1$d</string>
     <string name="no_matches">Tidak ada folder atau lagu yang cocok</string>
     <string name="hide_keyboard">Sembunyikan keyboard</string>
+    <string name="settings_car">Gambar mobil</string>
+    <string name="car_builtin">Bawaan</string>
+    <string name="car_custom">Gambar sendiri</string>
+    <string name="car_dialog_builtin">Gambar bawaan</string>
+    <string name="car_dialog_choose">Pilih gambar...</string>
+    <string name="car_dialog_remove">Hapus gambar sendiri</string>
+    <string name="car_saved">Gambar mobil disimpan</string>
+    <string name="car_failed">Gambar ini tidak bisa dipakai</string>
 </resources>

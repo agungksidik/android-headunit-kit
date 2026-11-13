@@ -41,7 +41,7 @@ UNIT=<unit-ip>:5555 sh scripts/backup.sh
 4. Optional: build and install the launcher (see [docs/launcher.md](docs/launcher.md)):
 ```
 cd launcher
-JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew testReleaseUnitTest assembleRelease
+JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew testPublicEditionReleaseUnitTest assemblePublicEditionRelease
 ```
 
 ## Screenshots
@@ -55,6 +55,10 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew testReleaseUnitTest assembleRel
 | Factory Music Player | Custom Music Player |
 |---|---|
 | <img src="docs/screenshots/00b-before-vendor-music.png" width="480" alt="Factory Music Player"> | <img src="docs/screenshots/02-player.png" width="480" alt="Custom Music Player"> |
+
+| Factory All Apps | Custom All Apps |
+|---|---|
+| <img src="docs/screenshots/00c-before-vendor-apps.png" width="480" alt="Factory All Apps"> | <img src="docs/screenshots/05-apps.png" width="480" alt="Custom All Apps"> |
 
 ### Gallery
 

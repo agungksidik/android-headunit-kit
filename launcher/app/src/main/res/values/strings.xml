@@ -66,4 +66,12 @@
     <string name="search_results">SEARCH RESULTS · %1$d</string>
     <string name="no_matches">No matching folders or songs</string>
     <string name="hide_keyboard">Hide keyboard</string>
+    <string name="settings_car">Car image</string>
+    <string name="car_builtin">Built-in</string>
+    <string name="car_custom">Custom image</string>
+    <string name="car_dialog_builtin">Built-in drawing</string>
+    <string name="car_dialog_choose">Choose image...</string>
+    <string name="car_dialog_remove">Remove custom image</string>
+    <string name="car_saved">Car image saved</string>
+    <string name="car_failed">Could not use this image</string>
 </resources>

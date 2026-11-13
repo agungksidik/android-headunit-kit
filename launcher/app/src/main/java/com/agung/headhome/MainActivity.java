@@ -87,6 +87,7 @@ public class MainActivity extends Activity {
     private boolean firstFixSeen;
     private boolean visible;
     private boolean compactLayout;
+    private long carModified;
     private boolean editMode;
     private boolean hasFix;
     private int speedKmh;
@@ -169,6 +170,7 @@ public class MainActivity extends Activity {
         btnRestartLabel = findViewById(R.id.btn_restart_label);
 
         music = new MusicCard(this, findViewById(R.id.music_card));
+        loadCar();
 
         btnEdit.setOnClickListener(v -> setEditMode(!editMode));
         findViewById(R.id.btn_restart).setOnClickListener(v -> RestartDialog.show(this));
@@ -197,6 +199,25 @@ public class MainActivity extends Activity {
 
     private static boolean isCompact(Configuration c) {
         return c.screenWidthDp > 0 && c.screenWidthDp < COMPACT_BELOW_DP;
+    }
+
+    /** Shows the custom car picture when there is one, else the built-in drawing. */
+    private void loadCar() {
+        carModified = CarImage.modified(this);
+        android.graphics.Bitmap custom = CarImage.load(this);
+        if (custom != null) {
+            car.setImageBitmap(custom);
+        } else {
+            car.setImageResource(R.drawable.car);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (CarImage.modified(this) != carModified) {
+            loadCar();
+        }
     }
 
     @Override
