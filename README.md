@@ -49,7 +49,7 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew testPublicEditionReleaseUnitTes
 
 Custom Sound replaces the factory DSP screen for daily use. It sends the same 32-band packet as the factory app straight to the DSP chip, so the sound changes at once.
 
-- 14 presets in a scrollable row. Style: Flat Atas, Nendang, Vokal, Datar, Malam, Preset Saya. Genre: Koplo, Dangdut, Akustik, Rock, Jazz, DJ / EDM, Pop, Bicara. Up to 10 own presets.
+- 14 presets in a scrollable row. Style: Flat Atas, Nendang, Vokal, Datar, Malam, Preset Saya. Genre: Koplo, Dangdut, Akustik, Rock, Jazz, DJ / EDM, Pop, Serba Bisa. Up to 10 own presets.
 - Five controls: Level (moves the whole curve, up to +12 dB), Bass, Kejernihan (mud cut), Vokal and Treble.
 - 32-band mode with per-band +/- and "all bands" +/-.
 - Listening position (driver, front, all, rear), A/B compare, a headroom badge.

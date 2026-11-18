@@ -5,9 +5,9 @@ public final class SoundPreset {
 
     public static final int BANDS = 32;
     public static final String[] STYLE_KEYS = {"flat_atas", "nendang", "vokal", "datar", "malam"};
-    public static final String[] GENRE_KEYS = {"koplo", "dangdut", "akustik", "rock", "jazz", "dj_edm", "pop", "bicara"};
+    public static final String[] GENRE_KEYS = {"koplo", "dangdut", "akustik", "rock", "jazz", "dj_edm", "pop", "serba_bisa"};
     public static final String[] BUILTIN_KEYS = {"flat_atas", "nendang", "vokal", "datar", "malam", "koplo", "dangdut",
-            "akustik", "rock", "jazz", "dj_edm", "pop", "bicara"};
+            "akustik", "rock", "jazz", "dj_edm", "pop", "serba_bisa"};
 
     public String name = "";
     public int level;
@@ -71,8 +71,8 @@ public final class SoundPreset {
                 return new SoundPreset(key, 4, 5, 2, 0, 4);
             case "pop":
                 return new SoundPreset(key, 5, 2, 1, 2, 2);
-            case "bicara":
-                return new SoundPreset(key, 4, -2, 2, 4, 0);
+            case "serba_bisa":
+                return new SoundPreset(key, 5, 3, 2, 2, 2);
             default:
                 return null;
         }

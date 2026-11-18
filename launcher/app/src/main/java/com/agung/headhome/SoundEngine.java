@@ -39,6 +39,7 @@ final class SoundEngine {
     static final String ID_CUSTOM = "custom";
     static final String ID_BUILTIN = "builtin:";
     static final String ID_USER = "user:";
+    static final String SERBA_BISA_ID = ID_BUILTIN + "serba_bisa";
 
     /** Fader and balance per listening position: driver (right-hand drive), front, all seats, rear. */
     static final int[][] SEAT_SITE = {{3, 11}, {3, 7}, {7, 7}, {12, 7}};
@@ -121,12 +122,16 @@ final class SoundEngine {
         return SoundCurve.gains(working);
     }
 
+    boolean isSerbaBisa() {
+        return SERBA_BISA_ID.equals(activeId);
+    }
+
     /** What is sent to the chip: flat for B, else the curve with anti-clip and smart loudness applied. */
     int[] effectiveGains() {
         if (showB) {
             return new int[SoundPreset.BANDS];
         }
-        return SoundAdjust.apply(userGains(), McuVolume.get(app), limiter, smartLoudness);
+        return SoundAdjust.apply(userGains(), McuVolume.get(app), limiter, smartLoudness, isSerbaBisa());
     }
 
     /** The name shown for the active setting. */
@@ -167,8 +172,8 @@ final class SoundEngine {
                 return ctx.getString(R.string.sound_preset_dj_edm);
             case "pop":
                 return ctx.getString(R.string.sound_preset_pop);
-            case "bicara":
-                return ctx.getString(R.string.sound_preset_bicara);
+            case "serba_bisa":
+                return ctx.getString(R.string.sound_preset_serba_bisa);
             default:
                 return ctx.getString(R.string.sound_preset_malam);
         }
@@ -505,6 +510,11 @@ final class SoundEngine {
             activeId = o.optString("active", ID_CUSTOM);
             // A state file from before this flag existed was written after the user changed something.
             applied = o.optBoolean("applied", true);
+            if ((ID_BUILTIN + "bicara").equals(activeId)) {
+                // The preset Bicara was replaced by Serba Bisa.
+                activeId = SERBA_BISA_ID;
+                working.copyFrom(SoundPreset.builtin("serba_bisa"));
+            }
             limiter = o.optBoolean("limiter", true);
             smartLoudness = o.optBoolean("smartLoudness", true);
             seat = Math.max(0, Math.min(SEAT_SITE.length - 1, o.optInt("seat", 0)));

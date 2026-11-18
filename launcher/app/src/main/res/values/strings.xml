@@ -114,6 +114,7 @@
     <string name="sound_comparing">Comparing: Flat</string>
     <string name="sound_headroom_high">Peak %1$s dB: high clipping risk</string>
     <string name="sound_headroom_limited">Anti-clip keeps the peak at %1$s dB</string>
+    <string name="sound_headroom_unguarded">Peak %1$s dB: turn on anti-clip for high volume</string>
     <string name="sound_headroom_ok">Enough headroom</string>
     <string name="sound_seat_driver">Driver</string>
     <string name="sound_seat_front">Front</string>
@@ -145,7 +146,6 @@
     <string name="sound_preset_jazz">Jazz</string>
     <string name="sound_preset_dj_edm">DJ / EDM</string>
     <string name="sound_preset_pop">Pop</string>
-    <string name="sound_preset_bicara">Bicara</string>
     <string name="sound_tag_koplo">Kendang and flute</string>
     <string name="sound_tag_dangdut">Warm, clear vocals</string>
     <string name="sound_tag_akustik">Plucking detail</string>
@@ -153,7 +153,6 @@
     <string name="sound_tag_jazz">Soft and warm</string>
     <string name="sound_tag_dj_edm">Hardest bass</string>
     <string name="sound_tag_pop">Balanced, bright</string>
-    <string name="sound_tag_bicara">Podcasts, news</string>
     <string name="sound_group_styles">Styles</string>
     <string name="sound_group_genres">Genres</string>
     <string name="sound_group_mine">My presets</string>
@@ -163,4 +162,7 @@
     <string name="sound_ok">OK</string>
     <string name="sound_scroll_left">Scroll presets left</string>
     <string name="sound_scroll_right">Scroll presets right</string>
+    <string name="sound_preset_serba_bisa">Serba Bisa</string>
+    <string name="sound_tag_serba_bisa">Fits every genre</string>
+    <string name="sound_handled_by_serba">Handled by Serba Bisa</string>
 </resources>

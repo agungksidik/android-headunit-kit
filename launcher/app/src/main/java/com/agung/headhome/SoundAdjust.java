@@ -24,8 +24,40 @@ public final class SoundAdjust {
         return Math.min(LIMITER_MAX_CUT_DB, (volume - (LIMITER_FROM_VOLUME - 2)) / 2);
     }
 
+    public static final int TAPER_BOOST_DB = 3;
+    public static final int TAPER_FULL_UP_TO_VOLUME = 8;
+    public static final int TAPER_ZERO_FROM_VOLUME = 20;
+
+    /** The extra dB for the 40 to 125 Hz bands of Serba Bisa at this volume (3 up to volume 8, 0 from volume 20). */
+    public static int taperBoost(int volume) {
+        if (volume <= TAPER_FULL_UP_TO_VOLUME) {
+            return TAPER_BOOST_DB;
+        }
+        if (volume >= TAPER_ZERO_FROM_VOLUME) {
+            return 0;
+        }
+        double t = (double) (TAPER_ZERO_FROM_VOLUME - volume) / (TAPER_ZERO_FROM_VOLUME - TAPER_FULL_UP_TO_VOLUME);
+        return (int) Math.round(TAPER_BOOST_DB * t);
+    }
+
     public static int[] apply(int[] userDb, int volume, boolean limiter, boolean smartLoudness) {
+        return apply(userDb, volume, limiter, smartLoudness, false);
+    }
+
+    /** serbaBisa true: use the preset's own volume taper and always apply anti-clip, whatever the switches say. */
+    public static int[] apply(int[] userDb, int volume, boolean limiter, boolean smartLoudness, boolean serbaBisa) {
         int[] out = userDb.clone();
+        if (serbaBisa) {
+            int boost = taperBoost(volume);
+            for (int i = 0; i < out.length; i++) {
+                int f = ChipDsp.FREQUENCIES[i];
+                if (f >= 40 && f <= 125) {
+                    out[i] += boost;
+                }
+            }
+            limiter = true;
+            smartLoudness = false;
+        }
         if (smartLoudness && volume <= LOUDNESS_UP_TO_VOLUME) {
             for (int i = 0; i < out.length; i++) {
                 int f = ChipDsp.FREQUENCIES[i];

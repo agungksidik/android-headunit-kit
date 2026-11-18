@@ -4,6 +4,7 @@ Newest first.
 
 ## 2026-11-18
 
+- New preset Serba Bisa replaces Bicara: bass lifted at low volume (+3 dB at 40 to 125 Hz up to volume 8, fading to 0 at volume 20) and anti-clip always on, independent of the two switches. A stored Bicara setting becomes Serba Bisa.
 - Sound presets are about 2 dB louder than the first version (level +2 on every built-in preset except Flat, which stays 0, and Night, which is unchanged). Anti-clip now keeps bands at +10 dB or lower, and the headroom badge is green up to +8 dB, amber above +8 and red above +11. Saved user presets are unchanged.
 - Swipe right to left on Home to open All Apps, with a slide transition; swipe left to right in All Apps (or Back) to return.
 - Custom Sound preset row: a fade and a chevron button on each side where more cards are hidden (the left one only after scrolling); a tap scrolls by one card.

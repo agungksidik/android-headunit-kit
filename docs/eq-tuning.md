@@ -91,7 +91,7 @@ How it works:
 - Five simple controls (Level, Bass, Clarity, Vocal, Treble) shape a 32-band curve. "32-band mode" shows one bar per band with a selected band, plus and minus per band, "All bands" (moves the whole curve) and "Flatten".
 - Gains are whole dB from -12 to +12, the same scale as the factory app. The 32 centers are the table above and Q is 2.0 on every band.
 - Every change sends all 32 bands in one packet after 120 ms, through the same call the factory app uses (`android.os.Hardware.setDSP_ak7604_status` with a hex string). The chip value is `(int)((12 + dB) * 30 / 24)`: 0 dB is 15 and +6 dB is 22. The 30 comes from `dsp3_eq_max` in `/data/nwdappconfig/app/UartConfig.ini` when that file is readable.
-- Presets: styles Flat High, Punchy, Vocal, Flat and Night, and genres Koplo, Dangdut, Akustik, Rock, Jazz, DJ / EDM, Pop and Bicara are built in (table below). "Save as..." stores up to 10 own presets (rename and delete in the "Presets" sheet) as JSON in the app's files. The last setting is sent again after every boot.
+- Presets: styles Flat High, Punchy, Vocal, Flat and Night, and genres Koplo, Dangdut, Akustik, Rock, Jazz, DJ / EDM, Pop and Serba Bisa are built in (table below). "Save as..." stores up to 10 own presets (rename and delete in the "Presets" sheet) as JSON in the app's files. The last setting is sent again after every boot.
 - Anti-clip: at volume 22 and above the bands below 125 Hz go down 1 dB per 2 volume steps (at most 4 dB), and no band stays above +10 dB. Smart loudness adds +2 dB at 50 to 125 Hz at volume 12 and below. Both are applied only when sending; they are not saved into a preset. The volume is the MCU volume.
 Built-in presets (Level, Bass, Clarity, Vocal, Treble; the curve math is the same for all, and every curve stays at +11 dB or lower, and anti-clip limits what is sent to +10):
 
@@ -109,7 +109,9 @@ Built-in presets (Level, Bass, Clarity, Vocal, Treble; the curve math is the sam
 | Jazz | 4 | 2 | 1 | 1 | 2 | Soft and warm |
 | DJ / EDM | 4 | 5 | 2 | 0 | 4 | Hardest bass |
 | Pop | 5 | 2 | 1 | 2 | 2 | Balanced, bright |
-| Bicara | 4 | -2 | 2 | 4 | 0 | Podcasts, news |
+| Serba Bisa | 5 | 3 | 2 | 2 | 2 | Fits every genre |
+
+Serba Bisa ("fits every genre") is made for bass you can feel at low volume and no distortion at high volume, and it carries its own volume behavior: the 40 to 125 Hz bands get +3 dB at volume 8 or lower, sliding down to 0 at volume 20, and anti-clip always applies (bands below 125 Hz cut from volume 22, every band at +10 dB or lower). It ignores the two switches; while it is active the screen shows them as on and disabled. The curve is sent again when the MCU volume changes. A saved setting that used the old preset Bicara becomes Serba Bisa.
 
 The levels are a little higher than in the first version so the presets are not too quiet; Flat stays at 0 as the reference. The headroom badge is green up to +8 dB, amber above +8 and red above +11. The preset row scrolls sideways; the "Presets" sheet lists the built-ins grouped as styles and genres, then your own presets.
 

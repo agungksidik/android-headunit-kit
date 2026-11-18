@@ -114,6 +114,7 @@
     <string name="sound_comparing">Membandingkan: Datar</string>
     <string name="sound_headroom_high">Puncak %1$s dB: risiko pecah tinggi</string>
     <string name="sound_headroom_limited">Anti pecah menjaga puncak %1$s dB</string>
+    <string name="sound_headroom_unguarded">Puncak %1$s dB: nyalakan Anti pecah untuk volume besar</string>
     <string name="sound_headroom_ok">Ruang aman cukup</string>
     <string name="sound_seat_driver">Supir</string>
     <string name="sound_seat_front">Depan</string>
@@ -145,7 +146,6 @@
     <string name="sound_preset_jazz">Jazz</string>
     <string name="sound_preset_dj_edm">DJ / EDM</string>
     <string name="sound_preset_pop">Pop</string>
-    <string name="sound_preset_bicara">Bicara</string>
     <string name="sound_tag_koplo">Kendang + suling</string>
     <string name="sound_tag_dangdut">Hangat, vokal jelas</string>
     <string name="sound_tag_akustik">Petikan detail</string>
@@ -153,7 +153,6 @@
     <string name="sound_tag_jazz">Lembut hangat</string>
     <string name="sound_tag_dj_edm">Bass paling nendang</string>
     <string name="sound_tag_pop">Seimbang cerah</string>
-    <string name="sound_tag_bicara">Podcast, berita</string>
     <string name="sound_group_styles">Gaya</string>
     <string name="sound_group_genres">Genre</string>
     <string name="sound_group_mine">Preset sendiri</string>
@@ -163,4 +162,7 @@
     <string name="sound_ok">OK</string>
     <string name="sound_scroll_left">Geser preset ke kiri</string>
     <string name="sound_scroll_right">Geser preset ke kanan</string>
+    <string name="sound_preset_serba_bisa">Serba Bisa</string>
+    <string name="sound_tag_serba_bisa">Cocok semua genre</string>
+    <string name="sound_handled_by_serba">Diatur otomatis oleh Serba Bisa</string>
 </resources>

@@ -51,7 +51,7 @@ public class SoundActivity extends Activity implements SoundEngine.Listener {
     private TextView abButton;
     /** Card order: five styles, the working "Preset Saya" (null), then the genres. */
     private static final String[] CARD_KEYS = {"flat_atas", "nendang", "vokal", "datar", "malam", null,
-            "koplo", "dangdut", "akustik", "rock", "jazz", "dj_edm", "pop", "bicara"};
+            "koplo", "dangdut", "akustik", "rock", "jazz", "dj_edm", "pop", "serba_bisa"};
 
     private final View[] presetCards = new View[CARD_KEYS.length];
     private int lastActiveCard = -2;
@@ -272,8 +272,12 @@ public class SoundActivity extends Activity implements SoundEngine.Listener {
             headroom.setTextColor(0xFFFF6B6B);
             headroom.setBackgroundResource(R.drawable.bg_badge_high);
         } else if (peak > HEADROOM_AMBER_ABOVE_DB) {
-            int kept = e.limiter ? Math.min(peak, SoundAdjust.PEAK_LIMIT_DB) : peak;
-            headroom.setText(getString(R.string.sound_headroom_limited, signed(kept)));
+            if (e.limiter || e.isSerbaBisa()) {
+                headroom.setText(getString(R.string.sound_headroom_limited,
+                        signed(Math.min(peak, SoundAdjust.PEAK_LIMIT_DB))));
+            } else {
+                headroom.setText(getString(R.string.sound_headroom_unguarded, signed(peak)));
+            }
             headroom.setTextColor(0xFFE0B25B);
             headroom.setBackgroundResource(R.drawable.bg_badge_warn);
         } else {
@@ -303,8 +307,14 @@ public class SoundActivity extends Activity implements SoundEngine.Listener {
         }
 
         // Toggles and A/B
-        limiterSwitch.setChecked(e.limiter);
-        smartSwitch.setChecked(e.smartLoudness);
+        boolean serba = e.isSerbaBisa();
+        limiterSwitch.setChecked(serba || e.limiter);
+        smartSwitch.setChecked(serba || e.smartLoudness);
+        limiterSwitch.setEnabled(!serba);
+        smartSwitch.setEnabled(!serba);
+        TextView limiterHint = findViewById(R.id.sound_limiter_hint);
+        limiterHint.setText(serba ? R.string.sound_handled_by_serba : R.string.sound_limiter_hint);
+        findViewById(R.id.sound_smart_hint).setVisibility(serba ? View.INVISIBLE : View.VISIBLE);
         abButton.setText(e.showB ? R.string.sound_ab_b : R.string.sound_ab_a);
         abButton.setBackgroundResource(e.showB ? R.drawable.bg_ab_active : R.drawable.bg_ab);
         binding = false;
@@ -357,8 +367,8 @@ public class SoundActivity extends Activity implements SoundEngine.Listener {
                 return R.string.sound_tag_dj_edm;
             case "pop":
                 return R.string.sound_tag_pop;
-            case "bicara":
-                return R.string.sound_tag_bicara;
+            case "serba_bisa":
+                return R.string.sound_tag_serba_bisa;
             default:
                 return R.string.sound_tag_malam;
         }
