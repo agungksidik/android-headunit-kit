@@ -3,6 +3,7 @@ package com.agung.headhome;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.graphics.Outline;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,6 +65,8 @@ public class PlayerActivity extends Activity implements PlayerService.Listener {
     private ImageButton npShuffle;
     private ImageButton npPlay;
     private ImageButton npRepeat;
+    private TextView npSoundChip;
+    private final SoundEngine.Listener soundListener = this::updateSoundChip;
     private VolumeControl volume;
 
     private final FolderAdapter folderAdapter = new FolderAdapter();
@@ -120,6 +123,12 @@ public class PlayerActivity extends Activity implements PlayerService.Listener {
         npShuffle = findViewById(R.id.np_shuffle);
         npPlay = findViewById(R.id.np_play);
         npRepeat = findViewById(R.id.np_repeat);
+        npSoundChip = findViewById(R.id.np_sound_chip);
+        findViewById(R.id.np_sound_zone).setOnClickListener(v -> startActivity(new Intent(this, SoundActivity.class)));
+        // In a narrow (split screen) window only the icon is shown.
+        if (getResources().getConfiguration().screenWidthDp < 900) {
+            npSoundChip.setVisibility(View.GONE);
+        }
 
         roundClip(findViewById(R.id.folders_card));
         roundClip(findViewById(R.id.songs_card));
@@ -252,6 +261,8 @@ public class PlayerActivity extends Activity implements PlayerService.Listener {
         started = true;
         PlayerService.ensureStarted(this);
         PlayerService.addListener(this);
+        SoundEngine.get(this).addListener(soundListener);
+        updateSoundChip();
         volume.start();
         refresh();
         handler.postDelayed(tick, 500);
@@ -262,6 +273,7 @@ public class PlayerActivity extends Activity implements PlayerService.Listener {
         super.onStop();
         started = false;
         PlayerService.removeListener(this);
+        SoundEngine.get(this).removeListener(soundListener);
         volume.stop();
         handler.removeCallbacks(tick);
         handler.removeCallbacks(searchRunnable);
@@ -271,6 +283,13 @@ public class PlayerActivity extends Activity implements PlayerService.Listener {
     @Override
     public void onPlayerChanged() {
         refresh();
+    }
+
+    private void updateSoundChip() {
+        String label = SoundEngine.get(this).activeLabel(this);
+        npSoundChip.setText(label);
+        boolean compact = getResources().getConfiguration().screenWidthDp < 900;
+        npSoundChip.setVisibility(label.isEmpty() || compact ? View.GONE : View.VISIBLE);
     }
 
     // ---- keyboard and search mode ----
@@ -335,6 +354,7 @@ public class PlayerActivity extends Activity implements PlayerService.Listener {
         findViewById(R.id.np_next).setVisibility(detail);
         findViewById(R.id.np_repeat).setVisibility(detail);
         findViewById(R.id.np_volume_zone).setVisibility(detail);
+        findViewById(R.id.np_sound_zone).setVisibility(detail);
         ViewGroup.LayoutParams play = npPlay.getLayoutParams();
         play.width = (int) ((active ? 44 : 66) * d);
         play.height = play.width;

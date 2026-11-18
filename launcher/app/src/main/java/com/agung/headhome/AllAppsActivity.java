@@ -12,6 +12,8 @@ public class AllAppsActivity extends Activity {
 
     private GridView grid;
     private View loading;
+    private final SwipeTracker swipe = new SwipeTracker(false);
+    private boolean launching;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,36 @@ public class AllAppsActivity extends Activity {
         }, "all-apps").start();
     }
 
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        int r = swipe.track(ev, getWindow().getDecorView());
+        if (r == SwipeTracker.FIRED) {
+            SwipeTracker.cancelChildren(ev, this);
+            finish();
+            return true;
+        }
+        if (r == SwipeTracker.SWALLOW) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    /** Slides out to the right, except when an app was launched (it has its own transition). */
+    @Override
+    public void finish() {
+        super.finish();
+        if (!launching) {
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
+    }
+
     private void show(List<AppList.Item> items) {
         loading.setVisibility(View.GONE);
         grid.setVisibility(View.VISIBLE);
         grid.setAdapter(new AppAdapter(this, items, R.layout.item_app_cell));
         grid.setOnItemClickListener((parent, view, position, id) -> {
             if (Launch.start(this, items.get(position).component)) {
+                launching = true;
                 finish();
             }
         });

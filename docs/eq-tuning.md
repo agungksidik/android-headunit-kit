@@ -82,3 +82,48 @@ Enter the old values you recorded in `changes.txt`, or select your other preset.
 ## Safety
 - Do not touch the screen while the car is moving. Tune parked.
 - If a source is quiet after the change, raise the volume instead of boosting every band. Per-source gains also exist in the factory menu (`mcu_gain_*` settings).
+
+## Custom Sound
+
+Custom Sound is the sound screen of the Custom Home app (dock "DSP", or the "Sound" entry in All Apps). It writes to the same DSP chip as the factory DSP app and replaces the tapping in [Entering values](#entering-values) with a curve, steppers and presets.
+
+How it works:
+- Five simple controls (Level, Bass, Clarity, Vocal, Treble) shape a 32-band curve. "32-band mode" shows one bar per band with a selected band, plus and minus per band, "All bands" (moves the whole curve) and "Flatten".
+- Gains are whole dB from -12 to +12, the same scale as the factory app. The 32 centers are the table above and Q is 2.0 on every band.
+- Every change sends all 32 bands in one packet after 120 ms, through the same call the factory app uses (`android.os.Hardware.setDSP_ak7604_status` with a hex string). The chip value is `(int)((12 + dB) * 30 / 24)`: 0 dB is 15 and +6 dB is 22. The 30 comes from `dsp3_eq_max` in `/data/nwdappconfig/app/UartConfig.ini` when that file is readable.
+- Presets: styles Flat High, Punchy, Vocal, Flat and Night, and genres Koplo, Dangdut, Akustik, Rock, Jazz, DJ / EDM, Pop and Bicara are built in (table below). "Save as..." stores up to 10 own presets (rename and delete in the "Presets" sheet) as JSON in the app's files. The last setting is sent again after every boot.
+- Anti-clip: at volume 22 and above the bands below 125 Hz go down 1 dB per 2 volume steps (at most 4 dB), and no band stays above +10 dB. Smart loudness adds +2 dB at 50 to 125 Hz at volume 12 and below. Both are applied only when sending; they are not saved into a preset. The volume is the MCU volume.
+Built-in presets (Level, Bass, Clarity, Vocal, Treble; the curve math is the same for all, and every curve stays at +11 dB or lower, and anti-clip limits what is sent to +10):
+
+| Preset | Level | Bass | Clarity | Vocal | Treble | Character |
+|---|---|---|---|---|---|---|
+| Flat High | 8 | 0 | 0 | 0 | 0 | Flat +8, loud |
+| Punchy | 5 | 3 | 1 | 1 | 2 | Bass and sparkle |
+| Vocal | 5 | 1 | 1 | 3 | 1 | Clear voices |
+| Flat | 0 | 0 | 0 | 0 | 0 | As is |
+| Night | 2 | 2 | 1 | 1 | -2 | Easy on the ears |
+| Koplo | 5 | 4 | 2 | 3 | 2 | Kendang and flute |
+| Dangdut | 5 | 3 | 2 | 3 | 1 | Warm, clear vocals |
+| Akustik | 5 | 1 | 2 | 2 | 3 | Plucking detail |
+| Rock | 5 | 4 | 2 | 0 | 4 | Bass and cymbals |
+| Jazz | 4 | 2 | 1 | 1 | 2 | Soft and warm |
+| DJ / EDM | 4 | 5 | 2 | 0 | 4 | Hardest bass |
+| Pop | 5 | 2 | 1 | 2 | 2 | Balanced, bright |
+| Bicara | 4 | -2 | 2 | 4 | 0 | Podcasts, news |
+
+The levels are a little higher than in the first version so the presets are not too quiet; Flat stays at 0 as the reference. The headroom badge is green up to +8 dB, amber above +8 and red above +11. The preset row scrolls sideways; the "Presets" sheet lists the built-ins grouped as styles and genres, then your own presets.
+
+- A/B sends a flat curve while B is active.
+- Listening position sends the factory fader and balance values: Driver (3, 11), Front (3, 7), All (7, 7), Rear (12, 7). Driver assumes a right-hand-drive car (it is the factory "right" preset); Front is not a factory preset.
+- Custom Sound sends the factory loudness flag as off, because it has its own smart loudness.
+
+Notes and limits:
+- The first packet after start also turns the factory loudness off. Your factory presets are not changed, and the factory DSP app can still be opened with "Factory DSP".
+- If the DSP does not answer, a toast "DSP not responding" appears and the screen keeps its state. Android blocks the reflection call to a hidden framework method (the log says "Accessing hidden method ... denied"). Allow it once from a computer, then open Custom Sound again:
+```
+adb shell 'settings put global hidden_api_blacklist_exemptions "Landroid/os/Hardware;"'
+```
+The app shows a one-time dialog with this command when it sees the block. With this setting the chip accepted the packets on the tested unit.
+- Nothing is sent, and no preset is highlighted, until you pick a preset or change a control for the first time. The boot resend only happens after that.
+- The packet building is tested against a copy of the decompiled factory functions. Whether the chip accepts packets from a normal app has to be verified on the unit.
+- Rollback: select your factory preset in the factory DSP app (it sends its own values again), or reboot the unit and do not open Custom Sound. Delete `sound_state.json` in the app's files (or clear the app data) to stop the boot resend.

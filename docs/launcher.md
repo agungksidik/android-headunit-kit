@@ -32,7 +32,13 @@ Screenshots were taken on the tested unit before the car image was replaced by t
 - Volume row on the music card: minus and plus buttons and a level bar that drive the unit's MCU volume. Holding a button repeats every 150 ms.
 - Edit and Restart buttons. Restart asks for confirmation and warns when the car is moving.
 - Six shortcut tiles (defaults: CarPlay, Android Auto, YouTube, NewPipe, Maps, 360 camera). Long-press a tile, or tap it in edit mode, to pick any launchable app. A default app that is not installed shows "Choose app". Settings, "Reset shortcuts" restores the six defaults. The full layout shows a grid of 2 columns by 3 rows, the compact layout one row of six small tiles.
-- Dock: Home, Music, Phone, DSP, Settings, Apps.
+- Dock: Home, Music, Phone, DSP (opens Custom Sound), Settings, Apps.
+- Swipe: a quick right-to-left swipe anywhere on Home (at least 120 dp, mostly horizontal, within 600 ms) opens All Apps, which slides in from the right. A left-to-right swipe in All Apps, or Back, slides it out again. Swipes that start on a slider or on a horizontally scrollable view are ignored.
+- Volume popup: shown whenever the MCU volume changes, because the factory popup belongs to the factory launcher process and stops when another Home is set. It is an overlay window (centered at the top, never focusable or touchable) when the app may draw over other apps, otherwise a view on the app's own screens only. It hides 1.8 seconds after the last change and is not shown at app start. Grant the overlay permission once:
+```
+adb shell appops set com.agung.headhome SYSTEM_ALERT_WINDOW allow
+```
+- Launcher entries: besides Custom Home the app has two own entries in All Apps, "Music" (Custom Music Player) and "Sound" (Custom Sound), each with its own icon. They open as their own task, appear in the tile picker (so they can go on a Home tile) and in the factory launcher's app page. Custom Home stays the only Home activity.
 
 ### Car image
 - Settings, "Car image": use the built-in drawing, choose your own picture, or remove it. A chosen picture is copied to `filesDir/car_custom.png` as a PNG, scaled so the longest side is at most 800 px, and its transparency is kept. Home shows it instead of the built-in drawing and reloads it when the file changes.
@@ -91,8 +97,10 @@ adb shell pm grant com.agung.headhome android.permission.POST_NOTIFICATIONS
 adb shell cmd notification allow_listener com.agung.headhome/com.agung.headhome.MediaListener
 adb shell cmd package set-home-activity com.agung.headhome/.MainActivity
 adb shell setprop persist.nwd.launcher.default com.agung.headhome
+adb shell appops set com.agung.headhome SYSTEM_ALERT_WINDOW allow
+adb shell 'settings put global hidden_api_blacklist_exemptions "Landroid/os/Hardware;"'
 ```
-The first Home press right after installing can still open the Factory Home; the second opens Custom Home.
+The last line lets Custom Sound call the DSP chip (see [EQ tuning](eq-tuning.md#custom-sound)). The first Home press right after installing can still open the Factory Home; the second opens Custom Home.
 
 ## Check it worked
 Press Home: the launcher opens. Reboot and press Home again. `adb shell getprop persist.nwd.launcher.default` prints `com.agung.headhome`.

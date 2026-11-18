@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The outer padding leaves room for the card's shadow inside the overlay window. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="592dp"
+    android:layout_height="128dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_volume_popup"
+        android:elevation="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp">
+
+        <ImageView
+            android:id="@+id/volume_popup_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_volume"
+            android:tint="@color/accent" />
+
+        <ProgressBar
+            android:id="@+id/volume_popup_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/volume"
+            android:max="40"
+            android:progressDrawable="@drawable/progress_volume" />
+
+        <TextView
+            android:id="@+id/volume_popup_value"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:includeFontPadding="false"
+            android:textColor="#FFFFFF"
+            android:textSize="44sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>

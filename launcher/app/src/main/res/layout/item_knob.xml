@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/knob_root"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="@drawable/bg_knob"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="8dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="8dp">
+
+    <ImageButton
+        android:id="@+id/knob_minus"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_round"
+        android:padding="12dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_minus"
+        android:tint="@color/text" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/knob_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeMinTextSize="9sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/knob_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/knob_band"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoSizeMaxTextSize="10sp"
+            android:autoSizeMinTextSize="8sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/muted" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/knob_plus"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_round"
+        android:padding="12dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_plus"
+        android:tint="@color/text" />
+</LinearLayout>

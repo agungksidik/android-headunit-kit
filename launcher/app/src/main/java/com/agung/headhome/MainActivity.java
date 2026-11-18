@@ -343,15 +343,37 @@ public class MainActivity extends Activity {
             new DockEntry(R.id.dock_apps, R.drawable.ic_grid, R.string.dock_apps),
     };
 
+    private final SwipeTracker swipe = new SwipeTracker(true);
+
+    /** Opens All Apps, sliding in from the right. */
+    private void openAllApps() {
+        startActivity(new Intent(this, AllAppsActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        int r = swipe.track(ev, getWindow().getDecorView());
+        if (r == SwipeTracker.FIRED) {
+            SwipeTracker.cancelChildren(ev, this);
+            openAllApps();
+            return true;
+        }
+        if (r == SwipeTracker.SWALLOW) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
     private void setupDock() {
         findViewById(R.id.dock_music).setOnClickListener(
                 v -> startActivity(new Intent(this, PlayerActivity.class)));
         findViewById(R.id.dock_settings).setOnClickListener(
                 v -> startActivity(new Intent(this, SettingsActivity.class)));
         findViewById(R.id.dock_phone).setOnClickListener(v -> Launch.start(this, Launch.NWD_PHONE));
-        findViewById(R.id.dock_dsp).setOnClickListener(v -> Launch.start(this, Launch.NWD_DSP));
-        findViewById(R.id.dock_apps).setOnClickListener(
-                v -> startActivity(new Intent(this, AllAppsActivity.class)));
+        findViewById(R.id.dock_dsp).setOnClickListener(
+                v -> startActivity(new Intent(this, SoundActivity.class)));
+        findViewById(R.id.dock_apps).setOnClickListener(v -> openAllApps());
         // Home is the current screen: no-op.
         bindDock();
     }

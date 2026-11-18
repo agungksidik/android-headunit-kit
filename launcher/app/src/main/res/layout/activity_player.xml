@@ -383,10 +383,22 @@
                         android:tint="@color/text" />
 
                     <ImageButton
+                        android:layout_marginStart="12dp"
+                        android:id="@+id/np_repeat"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_round"
+                        android:contentDescription="@string/repeat_all"
+                        android:padding="14dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_repeat"
+                        android:tint="@color/text" />
+
+                    <ImageButton
+                        android:layout_marginStart="28dp"
                         android:id="@+id/np_prev"
                         android:layout_width="58dp"
                         android:layout_height="58dp"
-                        android:layout_marginStart="20dp"
                         android:background="@drawable/bg_round"
                         android:contentDescription="@string/prev"
                         android:padding="16dp"
@@ -395,10 +407,10 @@
                         android:tint="@color/text" />
 
                     <ImageButton
+                        android:layout_marginStart="20dp"
                         android:id="@+id/np_play"
                         android:layout_width="66dp"
                         android:layout_height="66dp"
-                        android:layout_marginStart="20dp"
                         android:background="@drawable/bg_round_light"
                         android:contentDescription="@string/play"
                         android:padding="19dp"
@@ -407,10 +419,10 @@
                         android:tint="@color/dark_icon" />
 
                     <ImageButton
+                        android:layout_marginStart="20dp"
                         android:id="@+id/np_next"
                         android:layout_width="58dp"
                         android:layout_height="58dp"
-                        android:layout_marginStart="20dp"
                         android:background="@drawable/bg_round"
                         android:contentDescription="@string/next"
                         android:padding="16dp"
@@ -418,17 +430,40 @@
                         android:src="@drawable/ic_next"
                         android:tint="@color/text" />
 
-                    <ImageButton
-                        android:id="@+id/np_repeat"
-                        android:layout_width="52dp"
+                    <LinearLayout
+                        android:id="@+id/np_sound_zone"
+                        android:layout_width="wrap_content"
                         android:layout_height="52dp"
-                        android:layout_marginStart="20dp"
-                        android:background="@drawable/bg_round"
-                        android:contentDescription="@string/repeat_all"
-                        android:padding="14dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_repeat"
-                        android:tint="@color/text" />
+                        android:layout_marginStart="28dp"
+                        android:background="@drawable/bg_pill"
+                        android:clickable="true"
+                        android:contentDescription="@string/sound_button"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:minWidth="52dp"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
+
+                        <ImageView
+                            android:id="@+id/np_sound"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_eq"
+                            android:tint="@color/text" />
+
+                        <TextView
+                            android:id="@+id/np_sound_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:maxWidth="120dp"
+                            android:textColor="@color/accent"
+                            android:textSize="14sp" />
+                    </LinearLayout>
 
                 </LinearLayout>
 

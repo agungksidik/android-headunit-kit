@@ -14,6 +14,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Volume popup over other apps: adb shell appops set com.agung.headhome SYSTEM_ALERT_WINDOW allow -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <!-- Package visibility: lists every launchable app for the picker and the all-apps grid. -->
     <queries>
@@ -72,10 +75,39 @@
             android:screenOrientation="landscape" />
 
         <activity
+            android:name=".SoundActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_sound"
+            android:label="@string/sound_button"
+            android:screenOrientation="landscape"
+            android:taskAffinity="com.agung.headhome.sound">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
             android:name=".PlayerActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:screenOrientation="landscape" />
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_music"
+            android:label="@string/launcher_music"
+            android:screenOrientation="landscape"
+            android:taskAffinity="com.agung.headhome.music"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".PlayerService"

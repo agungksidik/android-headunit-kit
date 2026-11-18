@@ -196,6 +196,7 @@ public class PlayerService extends Service {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        VolumePopup.get(this).start();
         prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         cacheFile = new File(getFilesDir(), "library.idx");

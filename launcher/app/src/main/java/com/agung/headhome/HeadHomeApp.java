@@ -23,5 +23,8 @@ public class HeadHomeApp extends Application {
                 AppList.invalidate(context);
             }
         }, filter);
+        // Resend the saved Custom Sound setting to the DSP chip on every process start (boot included).
+        SoundEngine.get(this).restoreOnce();
+        VolumePopup.get(this).start();
     }
 }
